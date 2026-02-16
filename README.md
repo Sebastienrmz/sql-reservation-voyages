@@ -1,3 +1,4 @@
+Sébastien Ramirez- Raphael De Robien
 # Mini-projet TI404 – Bases de données 1  
 ## Partie 1 – Analyse des besoins & MCD  
 **Domaine : Plateforme de réservation de voyages (type Booking / Expedia)**
