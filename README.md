@@ -119,5 +119,5 @@ Il inclut les entités CLIENT, OFFRE, PRESTATAIRE, RESERVATION, PAIEMENT, CONSEI
 
 ## 6. Organisation du travail (binôme)
 
-- Membre 1 : Analyse des besoins, rédaction du README  
-- Membre 2 : Conception du MCD
+- Raphael&Sébastien: Analyse des besoins, rédaction du README  
+- Raphael&Sébastien: Conception du MCD
