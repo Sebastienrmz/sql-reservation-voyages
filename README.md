@@ -115,10 +115,7 @@ Il inclut les entités CLIENT, OFFRE, PRESTATAIRE, RESERVATION, PAIEMENT, CONSEI
 - Entité faible : paiement dépendant de la réservation  
 - Association ternaire : gestion Client–Offre–Conseiller  
 
-> Insérer ici l’image du MCD  
-> Le fichier source du MCD est fourni dans le dépôt GitHub.
 
----
 
 ## 6. Organisation du travail (binôme)
 
