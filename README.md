@@ -144,12 +144,12 @@ La base de données est utilisée dans le contexte d’une plateforme de réserv
 Dans ce contexte, un conseiller de l’agence utilise la base de données afin de suivre l’activité des clients et gérer les réservations. Le conseiller doit pouvoir accéder rapidement aux différentes informations nécessaires pour répondre aux demandes des clients et assurer le bon suivi des séjours.
 Grâce à la base de données, le conseiller peut :
 
-consulter les informations des clients enregistrés sur la plateforme ;
-visualiser les réservations effectuées par les clients ;
-consulter les offres de voyage disponibles ainsi que leurs destinations ;
-vérifier les paiements associés aux réservations ;
-identifier les promotions appliquées aux offres ;
-connaître les prestataires (hôtels, transport ou activités) qui fournissent les offres ;
+-consulter les informations des clients enregistrés sur la plateforme ;
+-visualiser les réservations effectuées par les clients ;
+-consulter les offres de voyage disponibles ainsi que leurs destinations ;
+-vérifier les paiements associés aux réservations ;
+-identifier les promotions appliquées aux offres ;
+-connaître les prestataires (hôtels, transport ou activités) qui fournissent les offres ;
 
 consulter les options supplémentaires incluses dans certaines réservations.
 Les requêtes SQL réalisées dans la prochaine étape permettront d’extraire ces informations à partir de la base de données afin de faciliter le travail du conseiller et l’analyse de l’activité de la plateforme.
