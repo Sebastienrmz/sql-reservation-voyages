@@ -1,7 +1,5 @@
-============================================================
 Mini-Projet TI404 – Bases de données 1
 Plateforme de réservation de voyages
-============================================================
 
 Auteurs :
 Sébastien Ramirez
