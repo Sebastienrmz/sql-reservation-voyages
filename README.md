@@ -124,18 +124,108 @@ Il inclut les entités CLIENT, OFFRE, PRESTATAIRE, RESERVATION, PAIEMENT, CONSEI
 - Raphael&Sébastien: Conception du MCD
 
 
-## 7. MLD 
-Client = (client VARCHAR(50), nom_client VARCHAR(50), prénom_client VARCHAR(50), email_client VARCHAR(50), date_naissance VARCHAR(50), téléphone VARCHAR(50), pays_résidence VARCHAR(50), langue_préf VARCHAR(50));
-Offre = (offre VARCHAR(50), titre VARCHAR(50), description VARCHAR(50), pays_destination VARCHAR(50), ville_destination VARCHAR(50), date_début VARCHAR(50), date_fin VARCHAR(50), durée_séjour VARCHAR(50), politique_annulation VARCHAR(50));
-Prestataire = (préstataire VARCHAR(50), nom_préstataire VARCHAR(50), type VARCHAR(50), email_préstataire VARCHAR(50), téléphone_préstataire VARCHAR(50));
-Promotion = (promotion VARCHAR(50), code_promo VARCHAR(50), type_promo VARCHAR(50), valeur_promo VARCHAR(50));
-Option = (option VARCHAR(50), libelle_option VARCHAR(50), prix_option VARCHAR(50), type_option VARCHAR(50));
-Conseiller = (conseiller VARCHAR(50), nom_conseiller VARCHAR(50), prénom_conseiller VARCHAR(50), role VARCHAR(50));
-Réservation = (réservation VARCHAR(50), date_création_réserv VARCHAR(50), statut_réservation VARCHAR(50), date_départ VARCHAR(50), date_retour VARCHAR(50), nb_voyageurs VARCHAR(50), prix_tot VARCHAR(50), devise VARCHAR(50), #conseiller*, #offre, #client);
-Paiement = (paiement VARCHAR(50), statut_paiement VARCHAR(50), montant_paiement VARCHAR(50), #réservation);
-Propose = (#offre, #promotion);
-est_fournie_par = (#offre, #préstataire);
-Inclut = (#réservation, #option);
+------------------------------------------------------------
+7. Modèle Logique de Données (MLD)
+------------------------------------------------------------
+
+Client
+(
+    client VARCHAR(50),
+    nom_client VARCHAR(50),
+    prenom_client VARCHAR(50),
+    email_client VARCHAR(50),
+    date_naissance VARCHAR(50),
+    telephone VARCHAR(50),
+    pays_residence VARCHAR(50),
+    langue_pref VARCHAR(50)
+)
+
+Offre
+(
+    offre VARCHAR(50),
+    titre VARCHAR(50),
+    description VARCHAR(50),
+    pays_destination VARCHAR(50),
+    ville_destination VARCHAR(50),
+    date_debut VARCHAR(50),
+    date_fin VARCHAR(50),
+    duree_sejour VARCHAR(50),
+    politique_annulation VARCHAR(50)
+)
+
+Prestataire
+(
+    prestataire VARCHAR(50),
+    nom_prestataire VARCHAR(50),
+    type VARCHAR(50),
+    email_prestataire VARCHAR(50),
+    telephone_prestataire VARCHAR(50)
+)
+
+Promotion
+(
+    promotion VARCHAR(50),
+    code_promo VARCHAR(50),
+    type_promo VARCHAR(50),
+    valeur_promo VARCHAR(50)
+)
+
+Option
+(
+    option VARCHAR(50),
+    libelle_option VARCHAR(50),
+    prix_option VARCHAR(50),
+    type_option VARCHAR(50)
+)
+
+Conseiller
+(
+    conseiller VARCHAR(50),
+    nom_conseiller VARCHAR(50),
+    prenom_conseiller VARCHAR(50),
+    role VARCHAR(50)
+)
+
+Reservation
+(
+    reservation VARCHAR(50),
+    date_creation_reserv VARCHAR(50),
+    statut_reservation VARCHAR(50),
+    date_depart VARCHAR(50),
+    date_retour VARCHAR(50),
+    nb_voyageurs VARCHAR(50),
+    prix_tot VARCHAR(50),
+    devise VARCHAR(50),
+    #conseiller,
+    #offre,
+    #client
+)
+
+Paiement
+(
+    paiement VARCHAR(50),
+    statut_paiement VARCHAR(50),
+    montant_paiement VARCHAR(50),
+    #reservation
+)
+
+Propose
+(
+    #offre,
+    #promotion
+)
+
+Est_fournie_par
+(
+    #offre,
+    #prestataire
+)
+
+Inclut
+(
+    #reservation,
+    #option
+)
 
 
 ## 8. Scénario d’utilisation de la base de données
