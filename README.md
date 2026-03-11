@@ -1,1 +1,249 @@
-Sébastien Ramirez- Raphael De Robien # Mini-projet TI404 – Bases de données 1 ## Partie 1 – Analyse des besoins & MCD **Domaine : Plateforme de réservation de voyages (type Booking / Expedia)** --- ## 1. Contexte du projet Ce mini-projet consiste à appliquer la méthode MERISE pour concevoir une base de données. Le domaine choisi est celui d’une agence de voyages en ligne proposant des séjours incluant transport, hébergement et activités, à l’image de plateformes comme Booking ou Expedia. Références : - https://www.booking.com - https://www.expedia.fr --- ## 2. Prompt utilisé (Framework RICARDO) **Rôle (R)** Agir en tant qu’analyste métier dans le domaine du tourisme et des voyages. **Instructions (I)** Fournir les règles de gestion de l’entreprise puis un dictionnaire de données brutes sous forme de tableau. **Contexte (C)** Entreprise de type plateforme de réservation de voyages et séjours (transport, hébergement, activités). **Contraintes additionnelles (A)** - Règles de gestion sous forme de liste à puces - Dictionnaire de données contenant entre 25 et 35 données - Format clair et structuré **Références (R)** - https://www.booking.com - https://www.expedia.fr **Rendement désiré (D)** - Liste de règles de gestion - Tableau de dictionnaire de données (signification, type, taille) **Objectif (O)** Obtenir une analyse des besoins complète pour concevoir le MCD. --- ## 3. Règles de gestion (règles métier) - L’agence référence des clients avec leurs coordonnées et préférences. - Un client peut effectuer plusieurs réservations. - L’agence propose des offres de voyages avec destination, période de validité et durée. - Une offre peut inclure transport, hébergement et activités. - Les prix varient selon la période et les promotions. - L’agence gère des prestataires (hôtels, compagnies de transport, activités). - Un prestataire peut fournir plusieurs offres. - Une réservation est effectuée par un client pour une offre donnée. - Une réservation possède un statut (en option, confirmée, annulée, terminée). - Une réservation peut être réglée en un ou plusieurs paiements. - Chaque paiement possède un montant, une date, un moyen de paiement et un statut. - Des promotions peuvent être appliquées à certaines réservations. - Certaines réservations sont suivies par un conseiller de l’agence. --- ## 4. Dictionnaire de données | Signification de la donnée | Type | Taille | |---------------------------|------|--------| | Identifiant du client | Numérique | 10 | | Civilité du client | Texte | 10 | | Nom du client | Texte | 50 | | Prénom du client | Texte | 50 | | Date de naissance du client | Date | 8 | | Email du client | Texte | 120 | | Téléphone du client | Texte | 20 | | Pays de résidence | Texte | 50 | | Langue préférée | Texte | 10 | | Identifiant de l’offre | Numérique | 10 | | Titre de l’offre | Texte | 120 | | Description de l’offre | Texte | 1000 | | Pays de destination | Texte | 50 | | Ville de destination | Texte | 80 | | Date début validité offre | Date | 8 | | Date fin validité offre | Date | 8 | | Durée du séjour | Numérique | 3 | | Politique d’annulation | Texte | 300 | | Identifiant du prestataire | Numérique | 10 | | Nom du prestataire | Texte | 120 | | Type de prestataire | Texte | 30 | | Email du prestataire | Texte | 120 | | Téléphone du prestataire | Texte | 20 | | Identifiant réservation | Texte | 20 | | Date de création réservation | DateHeure | 14 | | Statut de la réservation | Texte | 20 | | Date de départ | Date | 8 | | Date de retour | Date | 8 | | Nombre de voyageurs | Numérique | 2 | | Prix total | Décimal | 10 | | Devise | Texte | 3 | | Code promotion | Texte | 20 | | Identifiant paiement | Numérique | 12 | | Statut du paiement | Texte | 20 | | Montant du paiement | Décimal | 10 | --- ## 5. Modèle Conceptuel de Données (MCD) Le MCD a été réalisé avec un outil de modélisation (ex : Looping, Draw.io). Il inclut les entités CLIENT, OFFRE, PRESTATAIRE, RESERVATION, PAIEMENT, CONSEILLER. Éléments avancés de modélisation intégrés : - Association récursive : parrainage entre clients - Entité faible : paiement dépendant de la réservation - Association ternaire : gestion Client–Offre–Conseiller ## 6. Organisation du travail (binôme) - Raphael&Sébastien: Analyse des besoins, rédaction du README - Raphael&Sébastien: Conception du MCD ## 7. MLD Client ( client VARCHAR(50), nom_client VARCHAR(50), prenom_client VARCHAR(50), email_client VARCHAR(50), date_naissance VARCHAR(50), telephone VARCHAR(50), pays_residence VARCHAR(50), langue_pref VARCHAR(50) ) Offre ( offre VARCHAR(50), titre VARCHAR(50), description VARCHAR(50), pays_destination VARCHAR(50), ville_destination VARCHAR(50), date_debut VARCHAR(50), date_fin VARCHAR(50), duree_sejour VARCHAR(50), politique_annulation VARCHAR(50) ) Prestataire ( prestataire VARCHAR(50), nom_prestataire VARCHAR(50), type VARCHAR(50), email_prestataire VARCHAR(50), telephone_prestataire VARCHAR(50) ) Promotion ( promotion VARCHAR(50), code_promo VARCHAR(50), type_promo VARCHAR(50), valeur_promo VARCHAR(50) ) Option ( option VARCHAR(50), libelle_option VARCHAR(50), prix_option VARCHAR(50), type_option VARCHAR(50) ) Conseiller ( conseiller VARCHAR(50), nom_conseiller VARCHAR(50), prenom_conseiller VARCHAR(50), role VARCHAR(50) ) Reservation ( reservation VARCHAR(50), date_creation_reserv VARCHAR(50), statut_reservation VARCHAR(50), date_depart VARCHAR(50), date_retour VARCHAR(50), nb_voyageurs VARCHAR(50), prix_tot VARCHAR(50), devise VARCHAR(50), #conseiller, #offre, #client ) Paiement ( paiement VARCHAR(50), statut_paiement VARCHAR(50), montant_paiement VARCHAR(50), #reservation ) Propose ( #offre, #promotion ) Est_fournie_par ( #offre, #prestataire ) Inclut ( #reservation, #option ) ## 8. Scénario d’utilisation de la base de données La base de données est utilisée dans le contexte d’une plateforme de réservation de voyages similaire à Booking ou Expedia. Elle permet de gérer les informations liées aux clients, aux offres de voyage, aux prestataires, aux réservations et aux paiements. Dans ce contexte, un conseiller de l’agence utilise la base de données afin de suivre l’activité des clients et gérer les réservations. Le conseiller doit pouvoir accéder rapidement aux différentes informations nécessaires pour répondre aux demandes des clients et assurer le bon suivi des séjours. Grâce à la base de données, le conseiller peut : consulter les informations des clients enregistrés sur la plateforme ; visualiser les réservations effectuées par les clients ; consulter les offres de voyage disponibles ainsi que leurs destinations ; vérifier les paiements associés aux réservations ; identifier les promotions appliquées aux offres ; connaître les prestataires (hôtels, transport ou activités) qui fournissent les offres ; consulter les options supplémentaires incluses dans certaines réservations. Les requêtes SQL réalisées dans la prochaine étape permettront d’extraire ces informations à partir de la base de données afin de faciliter le travail du conseiller et l’analyse de l’activité de la plateforme.
+============================================================
+Mini-Projet TI404 – Bases de données 1
+Plateforme de réservation de voyages
+============================================================
+
+Auteurs :
+Sébastien Ramirez
+Raphael De Robien
+
+Formation : TI404 – Bases de données
+Projet : Conception et implémentation d'une base de données
+Thème : Plateforme de réservation de voyages (type Booking / Expedia)
+
+------------------------------------------------------------
+1. Présentation du projet
+------------------------------------------------------------
+
+Ce mini-projet a pour objectif de concevoir et d’implémenter une base de données relationnelle en appliquant la méthode MERISE.
+
+Le domaine choisi est celui d’une plateforme de réservation de voyages en ligne similaire à des services comme Booking ou Expedia. La base de données doit permettre de gérer l’ensemble des informations nécessaires à l’activité d’une agence de voyages :
+
+- gestion des clients
+- gestion des offres de voyages
+- gestion des prestataires (hôtels, transport, activités)
+- gestion des réservations
+- gestion des paiements
+- gestion des promotions
+- gestion des options de voyage
+- gestion des conseillers
+
+L’objectif est de passer par les différentes étapes de conception d’une base de données, depuis l’analyse des besoins jusqu’à l’interrogation de la base à l’aide de requêtes SQL.
+
+Références utilisées pour le domaine étudié :
+https://www.booking.com
+https://www.expedia.fr
+
+
+------------------------------------------------------------
+2. Méthodologie utilisée
+------------------------------------------------------------
+
+La conception de la base de données a été réalisée en suivant la méthode MERISE.
+
+Les étapes principales du projet sont :
+
+1. Analyse des besoins
+2. Définition des règles de gestion
+3. Création du dictionnaire de données
+4. Conception du Modèle Conceptuel de Données (MCD)
+5. Transformation en Modèle Logique de Données (MLD)
+6. Implémentation du Modèle Physique en SQL
+7. Ajout de contraintes d’intégrité
+8. Insertion de données de test
+9. Réalisation de requêtes d’interrogation
+
+Cette démarche permet de structurer les données et de garantir la cohérence du modèle.
+
+
+------------------------------------------------------------
+3. Règles de gestion
+------------------------------------------------------------
+
+Les principales règles métier identifiées pour la plateforme sont les suivantes :
+
+- L’agence référence des clients avec leurs coordonnées et informations personnelles.
+- Un client peut effectuer plusieurs réservations.
+- L’agence propose différentes offres de voyages avec destination et durée.
+- Une offre peut être fournie par un ou plusieurs prestataires.
+- Les prestataires peuvent être des hôtels, des compagnies de transport ou des activités.
+- Une réservation est effectuée par un client pour une offre donnée.
+- Une réservation possède un statut : en option, confirmée, annulée ou terminée.
+- Une réservation peut être suivie par un conseiller.
+- Une réservation peut être réglée en un ou plusieurs paiements.
+- Chaque paiement possède un montant et un statut.
+- Des promotions peuvent être appliquées à certaines offres.
+- Une réservation peut inclure plusieurs options supplémentaires.
+
+
+------------------------------------------------------------
+4. Dictionnaire de données
+------------------------------------------------------------
+
+Le dictionnaire de données regroupe les principales informations manipulées dans la base de données.
+
+Exemples de données :
+
+Identifiant client
+Nom client
+Prénom client
+Email client
+Date de naissance
+Téléphone
+Pays de résidence
+Langue préférée
+
+Identifiant offre
+Titre de l’offre
+Description
+Pays destination
+Ville destination
+Date début
+Date fin
+Durée du séjour
+Politique d’annulation
+
+Identifiant prestataire
+Nom prestataire
+Type prestataire
+Email prestataire
+Téléphone prestataire
+
+Identifiant réservation
+Date de création
+Statut réservation
+Date de départ
+Date de retour
+Nombre de voyageurs
+Prix total
+Devise
+
+Identifiant paiement
+Statut paiement
+Montant paiement
+
+Code promotion
+
+
+------------------------------------------------------------
+5. Modèle Conceptuel de Données (MCD)
+------------------------------------------------------------
+
+Le Modèle Conceptuel de Données a été réalisé à l’aide de l’outil Looping.
+
+Les principales entités du système sont :
+
+CLIENT
+OFFRE
+PRESTATAIRE
+RESERVATION
+PAIEMENT
+PROMOTION
+OPTION
+CONSEILLER
+
+Certaines relations sont de type plusieurs-à-plusieurs. Elles sont donc modélisées par des tables d’association :
+
+PROPOSE (Offre – Promotion)
+EST_FOURNIE_PAR (Offre – Prestataire)
+INCLUT (Reservation – Option)
+
+Le modèle respecte les principes de normalisation afin de limiter les redondances et garantir la cohérence des données.
+
+
+------------------------------------------------------------
+6. Modèle Logique de Données (MLD)
+------------------------------------------------------------
+
+Client
+(client, nom_client, prenom_client, email_client, date_naissance,
+telephone, pays_residence, langue_pref)
+
+Offre
+(offre, titre, description, pays_destination, ville_destination,
+date_debut, date_fin, duree_sejour, politique_annulation)
+
+Prestataire
+(prestataire, nom_prestataire, type, email_prestataire, telephone)
+
+Promotion
+(promotion, code_promo, type_promo, valeur_promo)
+
+Option
+(option, libelle_option, prix_option, type_option)
+
+Conseiller
+(conseiller, nom_conseiller, prenom_conseiller, role)
+
+Reservation
+(reservation, date_creation_reserv, statut_reservation,
+date_depart, date_retour, nb_voyageurs, prix_tot, devise,
+#conseiller, #offre, #client)
+
+Paiement
+(paiement, statut_paiement, montant_paiement, #reservation)
+
+Propose
+(#offre, #promotion)
+
+Est_fournie_par
+(#offre, #prestataire)
+
+Inclut
+(#reservation, #option)
+
+
+------------------------------------------------------------
+7. Implémentation SQL
+------------------------------------------------------------
+
+La base de données a été implémentée en SQL à l’aide de plusieurs scripts :
+
+1_creation.sql
+Création des tables avec les clés primaires et étrangères.
+
+2_contraintes.sql
+Ajout des contraintes d’intégrité (CHECK, validation des valeurs, etc.).
+
+3_insertion.sql
+Insertion de données de test permettant de vérifier le fonctionnement de la base.
+
+4_interrogation.sql
+Requêtes SQL permettant d’interroger la base de données.
+
+
+------------------------------------------------------------
+8. Exemple d’utilisation de la base
+------------------------------------------------------------
+
+La base de données est utilisée par les conseillers d’une agence de voyages afin de suivre l’activité des clients et gérer les réservations.
+
+Un conseiller peut :
+
+- consulter les informations des clients
+- visualiser les réservations effectuées
+- analyser les offres de voyage disponibles
+- vérifier les paiements associés aux réservations
+- identifier les promotions appliquées
+- consulter les prestataires associés aux offres
+- consulter les options incluses dans les réservations
+
+Les requêtes SQL permettent ainsi d’extraire rapidement les informations nécessaires au suivi de l’activité de la plateforme.
+
+
+------------------------------------------------------------
+9. Conclusion
+------------------------------------------------------------
+
+Ce projet nous a permis de mettre en pratique la conception complète d’une base de données relationnelle.
+
+Nous avons appliqué les différentes étapes de la méthode MERISE : analyse des besoins, modélisation des données, implémentation SQL et interrogation de la base.
+
+Ce travail permet de mieux comprendre la conception et la gestion des bases de données dans un contexte réel d’application.
+
+Des améliorations pourraient être apportées au modèle, par exemple :
+
+- ajout d’un système d’avis clients
+- gestion de plusieurs moyens de paiement
+- gestion des disponibilités en temps réel
+- historique des réservations et modifications
