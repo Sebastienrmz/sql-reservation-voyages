@@ -124,9 +124,8 @@ Il inclut les entités CLIENT, OFFRE, PRESTATAIRE, RESERVATION, PAIEMENT, CONSEI
 - Raphael&Sébastien: Conception du MCD
 
 
-------------------------------------------------------------
-7. Modèle Logique de Données (MLD)
-------------------------------------------------------------
+
+## 7. Modèle Logique de Données (MLD)
 
 Client
 (
