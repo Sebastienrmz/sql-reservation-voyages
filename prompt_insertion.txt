@@ -1,0 +1,50 @@
+Prompt pour la génération des données
+
+Rôle (R)
+Agir comme un générateur de données pour une base de données d’une plateforme de réservation de voyages.
+
+Instructions (I)
+Générer un ensemble de requêtes SQL INSERT INTO permettant de remplir une base de données contenant les tables suivantes :
+Client, Offre, Prestataire, Promotion, OptionVoyage, Conseiller, Reservation, Paiement, Propose, Est_Fournie_Par et Inclut.
+
+Contexte (C)
+La base de données correspond à une plateforme de réservation de voyages similaire à Booking ou Expedia.
+Les utilisateurs peuvent réserver des séjours dans différentes destinations.
+Chaque réservation est associée à une offre de voyage, peut être suivie par un conseiller et peut inclure plusieurs options (transport, activités, assurances, etc.).
+Les offres sont proposées par différents prestataires (hôtels, compagnies de transport ou organisateurs d’activités) et peuvent bénéficier de promotions.
+
+Contraintes (A)
+Les données générées doivent respecter les contraintes de la base de données, notamment :
+nb_voyageurs doit être supérieur à 0
+prix_tot doit être positif
+montant_paiement doit être positif
+date_retour doit être postérieure ou égale à date_depart
+date_fin doit être postérieure ou égale à date_debut
+duree_sejour doit être positive
+Valeurs possibles :
+statut_reservation : en_option, confirmee, annulee, terminee
+statut_paiement : en_attente, valide, refuse, rembourse
+type_promo : pourcentage, montant
+type prestataire : hotel, transport, activite
+devise : EUR, USD, GBP
+Les relations entre tables doivent être cohérentes (clés étrangères respectées).
+
+Références (R)
+Le fonctionnement est inspiré de plateformes de réservation de voyages comme :
+
+https://www.booking.com
+
+https://www.expedia.fr
+
+Rendement désiré (D)
+Produire un script SQL contenant des requêtes INSERT INTO permettant de remplir la base avec un volume raisonnable de données :
+environ 10 clients
+5 à 6 offres de voyage
+5 à 6 prestataires
+plusieurs promotions et options
+une dizaine de réservations
+plusieurs paiements associés aux réservations
+Le résultat doit être directement utilisable dans un fichier nommé 3_insertion.sql.
+
+Objectif (O)
+Obtenir un ensemble de données réalistes permettant de tester le fonctionnement complet de la base de données et de vérifier le bon fonctionnement des relations et des contraintes.
