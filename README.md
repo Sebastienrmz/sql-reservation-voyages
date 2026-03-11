@@ -234,10 +234,15 @@ Dans ce contexte, un conseiller de l’agence utilise la base de données afin d
 Grâce à la base de données, le conseiller peut :
 
 -consulter les informations des clients enregistrés sur la plateforme 
+
 -visualiser les réservations effectuées par les clients 
+
 -consulter les offres de voyage disponibles ainsi que leurs destinations 
+
 -vérifier les paiements associés aux réservations 
+
 -identifier les promotions appliquées aux offres 
+
 -connaître les prestataires (hôtels, transport ou activités) qui fournissent les offres 
 
 consulter les options supplémentaires incluses dans certaines réservations.
