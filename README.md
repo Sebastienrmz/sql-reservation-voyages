@@ -1,249 +1,94 @@
-Sébastien Ramirez- Raphael De Robien
-# Mini-projet TI404 – Bases de données 1  
-## Partie 1 – Analyse des besoins & MCD  
-**Domaine : Plateforme de réservation de voyages (type Booking / Expedia)**
+# Base de données de réservation de voyages
 
----
+Projet réalisé par **Sébastien Ramirez et Raphaël de Robien** à l'EFREI, dans le cadre du cours **TI404 – Bases de données 1**.
 
-## 1. Contexte du projet
-Ce mini-projet consiste à appliquer la méthode MERISE pour concevoir une base de données.
-Le domaine choisi est celui d’une agence de voyages en ligne proposant des séjours incluant
-transport, hébergement et activités, à l’image de plateformes comme Booking ou Expedia.
+La base représente une agence de voyages : clients, offres, réservations, paiements, prestataires, promotions et options. Le travail comprend l'analyse des besoins avec MERISE, un modèle conceptuel et 40 requêtes SQL.
 
-Références :
-- https://www.booking.com  
-- https://www.expedia.fr  
+Cette version reprend le [dépôt du binôme](https://github.com/raph907/ProjetDB_Ramirez_deRobien) et conserve son historique. Les fichiers ont été rangés et quelques requêtes et données d'exemple corrigées. Le modèle relationnel reste le même.
 
----
+## Utiliser la base
 
-## 2. Prompt utilisé (Framework RICARDO)
+Il faut un **serveur MySQL 8.0.16 ou plus récent**, avec les tables InnoDB, et un client comme MySQL Workbench ou `mysql`. Les versions antérieures à 8.0.16 n'appliquent pas les contraintes `CHECK` de ce projet.
 
-**Rôle (R)**  
-Agir en tant qu’analyste métier dans le domaine du tourisme et des voyages.
+Dans Workbench, ouvrir une connexion locale, créer une base vide puis la sélectionner :
 
-**Instructions (I)**  
-Fournir les règles de gestion de l’entreprise puis un dictionnaire de données brutes
-sous forme de tableau.
+```sql
+CREATE DATABASE voyages CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE voyages;
+```
 
-**Contexte (C)**  
-Entreprise de type plateforme de réservation de voyages et séjours (transport, hébergement, activités).
+Ouvrir et exécuter les quatre fichiers dans cet ordre, en gardant `voyages` comme schéma actif :
 
-**Contraintes additionnelles (A)**  
-- Règles de gestion sous forme de liste à puces  
-- Dictionnaire de données contenant entre 25 et 35 données  
-- Format clair et structuré
+| Fichier | Contenu |
+| --- | --- |
+| `1_creation.sql` | Les 11 tables, clés primaires et clés étrangères. |
+| `2_contraintes.sql` | Montants, dates, statuts, devises et autres règles de domaine. |
+| `3_insertion.sql` | Données fictives : 10 clients, 6 offres, 12 réservations et leurs relations. |
+| `4_interrogation.sql` | 10 filtres et tris, 10 agrégations, 10 jointures, 10 sous-requêtes. |
 
-**Références (R)**  
-- https://www.booking.com  
-- https://www.expedia.fr  
+Avec le client en ligne de commande, lancer `mysql --default-character-set=utf8mb4 -u root -p` depuis le dossier du projet, puis utiliser les mêmes instructions de création de base et :
 
-**Rendement désiré (D)**  
-- Liste de règles de gestion  
-- Tableau de dictionnaire de données (signification, type, taille)
+```sql
+SOURCE 1_creation.sql;
+SOURCE 2_contraintes.sql;
+SOURCE 3_insertion.sql;
+SOURCE 4_interrogation.sql;
+```
 
-**Objectif (O)**  
-Obtenir une analyse des besoins complète pour concevoir le MCD.
+Adapter le nom d'utilisateur à sa connexion. Les trois premiers scripts s'exécutent **une seule fois dans une base vide** : les relancer crée des erreurs de tables, de contraintes ou de clés déjà présentes. Pour refaire une installation, choisir une nouvelle base de test vide. Les scripts ne suppriment pas de base existante.
 
----
+## Modèle relationnel
 
-## 3. Règles de gestion (règles métier)
+Une réservation concerne un client et une offre. Elle peut être suivie par un conseiller et réglée en plusieurs paiements. Les trois tables d'association permettent de relier plusieurs promotions ou prestataires à une offre, et plusieurs options à une réservation.
 
-- L’agence référence des clients avec leurs coordonnées et préférences.  
-- Un client peut effectuer plusieurs réservations.  
-- L’agence propose des offres de voyages avec destination, période de validité et durée.  
-- Une offre peut inclure transport, hébergement et activités.  
-- Les prix varient selon la période et les promotions.  
-- L’agence gère des prestataires (hôtels, compagnies de transport, activités).  
-- Un prestataire peut fournir plusieurs offres.  
-- Une réservation est effectuée par un client pour une offre donnée.  
-- Une réservation possède un statut (en option, confirmée, annulée, terminée).  
-- Une réservation peut être réglée en un ou plusieurs paiements.  
-- Chaque paiement possède un montant, une date, un moyen de paiement et un statut.  
-- Des promotions peuvent être appliquées à certaines réservations.  
-- Certaines réservations sont suivies par un conseiller de l’agence.  
+```mermaid
+erDiagram
+    Client ||--o{ Reservation : effectue
+    Offre ||--o{ Reservation : concerne
+    Conseiller |o--o{ Reservation : suit
+    Reservation ||--o{ Paiement : recoit
+    Offre ||--o{ Propose : propose
+    Promotion ||--o{ Propose : associe
+    Offre ||--o{ Est_Fournie_Par : utilise
+    Prestataire ||--o{ Est_Fournie_Par : fournit
+    Reservation ||--o{ Inclut : inclut
+    OptionVoyage ||--o{ Inclut : associe
+```
 
----
+Le fichier [docs/modele.loo](docs/modele.loo) est le modèle de conception d'origine, à ouvrir avec Looping. Le diagramme ci-dessus résume les relations des scripts SQL ; il ne remplace pas ce document de cours.
 
-## 4. Dictionnaire de données
+## Exemple de consultation
 
-| Signification de la donnée | Type | Taille |
-|---------------------------|------|--------|
-| Identifiant du client | Numérique | 10 |
-| Civilité du client | Texte | 10 |
-| Nom du client | Texte | 50 |
-| Prénom du client | Texte | 50 |
-| Date de naissance du client | Date | 8 |
-| Email du client | Texte | 120 |
-| Téléphone du client | Texte | 20 |
-| Pays de résidence | Texte | 50 |
-| Langue préférée | Texte | 10 |
-| Identifiant de l’offre | Numérique | 10 |
-| Titre de l’offre | Texte | 120 |
-| Description de l’offre | Texte | 1000 |
-| Pays de destination | Texte | 50 |
-| Ville de destination | Texte | 80 |
-| Date début validité offre | Date | 8 |
-| Date fin validité offre | Date | 8 |
-| Durée du séjour | Numérique | 3 |
-| Politique d’annulation | Texte | 300 |
-| Identifiant du prestataire | Numérique | 10 |
-| Nom du prestataire | Texte | 120 |
-| Type de prestataire | Texte | 30 |
-| Email du prestataire | Texte | 120 |
-| Téléphone du prestataire | Texte | 20 |
-| Identifiant réservation | Texte | 20 |
-| Date de création réservation | DateHeure | 14 |
-| Statut de la réservation | Texte | 20 |
-| Date de départ | Date | 8 |
-| Date de retour | Date | 8 |
-| Nombre de voyageurs | Numérique | 2 |
-| Prix total | Décimal | 10 |
-| Devise | Texte | 3 |
-| Code promotion | Texte | 20 |
-| Identifiant paiement | Numérique | 12 |
-| Statut du paiement | Texte | 20 |
-| Montant du paiement | Décimal | 10 |
+Retrouver les réservations et leur client :
 
----
+```sql
+SELECT Reservation.reservation, Client.nom_client, Client.prenom_client
+FROM Reservation
+JOIN Client ON Reservation.client = Client.client;
+```
 
-## 5. Modèle Conceptuel de Données (MCD)
+Pour additionner les sommes réellement validées, on filtre les paiements avant le regroupement :
 
-Le MCD a été réalisé avec un outil de modélisation (ex : Looping, Draw.io).  
-Il inclut les entités CLIENT, OFFRE, PRESTATAIRE, RESERVATION, PAIEMENT, CONSEILLER.
+```sql
+SELECT reservation, SUM(montant_paiement) AS total_paiements
+FROM Paiement
+WHERE statut_paiement = 'valide'
+GROUP BY reservation;
+```
 
-Éléments avancés de modélisation intégrés :
-- Association récursive : parrainage entre clients  
-- Entité faible : paiement dépendant de la réservation  
-- Association ternaire : gestion Client–Offre–Conseiller  
+Avec les données fournies, `R001` donne **980.00**, `R006` donne **2100.00** et `R010` donne **1750.00**. Les paiements en attente et remboursés ne sont pas comptés dans ce total.
 
+## Règles et limites du projet
 
+- Les clés étrangères empêchent les références vers un client, une offre ou une réservation inexistants.
+- La suppression d'un conseiller laisse la réservation avec un conseiller `NULL`. Les autres relations utilisent les suppressions en cascade définies dans le script de création.
+- Les contraintes vérifient notamment les montants et les dates, mais plusieurs colonnes restent facultatives. Un `CHECK` ne remplace pas `NOT NULL`.
+- Les promotions sont associées aux offres ; elles ne recalculent pas automatiquement les prix. Le total des paiements n'est pas automatiquement rapproché du prix d'une réservation.
+- Les dates des séjours et les coordonnées sont des exemples fixes. Le jeu de données a été corrigé pour placer les trois séjours hors période dans les dates de validité de leur offre. Cette règle n'est pas imposée automatiquement entre les tables.
+- Le parrainage, la date et le moyen de paiement évoqués dans l'analyse initiale ne figurent pas dans les tables finales. Il n'y a pas d'interface web ni de système de réservation en ligne.
 
-## 6. Organisation du travail (binôme)
+## Documents de cours
 
-- Raphael&Sébastien: Analyse des besoins, rédaction du README  
-- Raphael&Sébastien: Conception du MCD
+L'[analyse initiale](docs/conception-initiale.md) et le [prompt de génération des données](docs/prompt_insertion.txt) sont conservés dans `docs/`. Ils retracent la démarche du cours et les aides utilisées. L'analyse des besoins et le MCD sont attribués aux deux membres du binôme dans le document d'origine ; aucune répartition individuelle supplémentaire n'est revendiquée ici.
 
-
-
-## 7. Modèle Logique de Données (MLD)
-
-Client
-(
-    client VARCHAR(50),
-    nom_client VARCHAR(50),
-    prenom_client VARCHAR(50),
-    email_client VARCHAR(50),
-    date_naissance VARCHAR(50),
-    telephone VARCHAR(50),
-    pays_residence VARCHAR(50),
-    langue_pref VARCHAR(50)
-)
-
-Offre
-(
-    offre VARCHAR(50),
-    titre VARCHAR(50),
-    description VARCHAR(50),
-    pays_destination VARCHAR(50),
-    ville_destination VARCHAR(50),
-    date_debut VARCHAR(50),
-    date_fin VARCHAR(50),
-    duree_sejour VARCHAR(50),
-    politique_annulation VARCHAR(50)
-)
-
-Prestataire
-(
-    prestataire VARCHAR(50),
-    nom_prestataire VARCHAR(50),
-    type VARCHAR(50),
-    email_prestataire VARCHAR(50),
-    telephone_prestataire VARCHAR(50)
-)
-
-Promotion
-(
-    promotion VARCHAR(50),
-    code_promo VARCHAR(50),
-    type_promo VARCHAR(50),
-    valeur_promo VARCHAR(50)
-)
-
-Option
-(
-    option VARCHAR(50),
-    libelle_option VARCHAR(50),
-    prix_option VARCHAR(50),
-    type_option VARCHAR(50)
-)
-
-Conseiller
-(
-    conseiller VARCHAR(50),
-    nom_conseiller VARCHAR(50),
-    prenom_conseiller VARCHAR(50),
-    role VARCHAR(50)
-)
-
-Reservation
-(
-    reservation VARCHAR(50),
-    date_creation_reserv VARCHAR(50),
-    statut_reservation VARCHAR(50),
-    date_depart VARCHAR(50),
-    date_retour VARCHAR(50),
-    nb_voyageurs VARCHAR(50),
-    prix_tot VARCHAR(50),
-    devise VARCHAR(50),
-    #conseiller,
-    #offre,
-    #client
-)
-
-Paiement
-(
-    paiement VARCHAR(50),
-    statut_paiement VARCHAR(50),
-    montant_paiement VARCHAR(50),
-    #reservation
-)
-
-Propose
-(
-    #offre,
-    #promotion
-)
-
-Est_fournie_par
-(
-    #offre,
-    #prestataire
-)
-
-Inclut
-(
-    #reservation,
-    #option
-)
-
-
-## 8. Scénario d’utilisation de la base de données
-
-La base de données est utilisée dans le contexte d’une plateforme de réservation de voyages similaire à Booking ou Expedia. Elle permet de gérer les informations liées aux clients, aux offres de voyage, aux prestataires, aux réservations et aux paiements.
-Dans ce contexte, un conseiller de l’agence utilise la base de données afin de suivre l’activité des clients et gérer les réservations. Le conseiller doit pouvoir accéder rapidement aux différentes informations nécessaires pour répondre aux demandes des clients et assurer le bon suivi des séjours.
-Grâce à la base de données, le conseiller peut :
-
--consulter les informations des clients enregistrés sur la plateforme 
-
--visualiser les réservations effectuées par les clients 
-
--consulter les offres de voyage disponibles ainsi que leurs destinations 
-
--vérifier les paiements associés aux réservations 
-
--identifier les promotions appliquées aux offres 
-
--connaître les prestataires (hôtels, transport ou activités) qui fournissent les offres 
-
-consulter les options supplémentaires incluses dans certaines réservations.
-Les requêtes SQL réalisées dans la prochaine étape permettront d’extraire ces informations à partir de la base de données afin de faciliter le travail du conseiller et l’analyse de l’activité de la plateforme.
+Voir [les vérifications et corrections](docs/verification.md) pour le détail des essais effectués sur cette version.

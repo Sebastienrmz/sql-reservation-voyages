@@ -1,3 +1,5 @@
+-- Création des 11 tables — MySQL 8.0.16 ou plus récent
+
 CREATE TABLE Client (
     client VARCHAR(50) PRIMARY KEY,
     nom_client VARCHAR(50) NOT NULL,

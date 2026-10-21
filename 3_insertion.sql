@@ -1,14 +1,18 @@
+-- Données de démonstration — MySQL 8.0.16 ou plus récent
+
+START TRANSACTION;
+
 INSERT INTO Client (client, nom_client, prenom_client, email_client, date_naissance, telephone, pays_residence, langue_pref) VALUES
-('C001', 'Dupont', 'Jean', 'jean.dupont@email.com', '1990-05-14', '0612345678', 'France', 'fr'),
-('C002', 'Martin', 'Claire', 'claire.martin@email.com', '1988-09-22', '0623456789', 'Belgique', 'fr'),
-('C003', 'Bernard', 'Lucas', 'lucas.bernard@email.com', '1995-03-10', '0634567891', 'France', 'fr'),
-('C004', 'Petit', 'Emma', 'emma.petit@email.com', '1992-12-01', '0645678912', 'Suisse', 'fr'),
-('C005', 'Robert', 'Hugo', 'hugo.robert@email.com', '1985-07-18', '0656789123', 'France', 'fr'),
-('C006', 'Richard', 'Ines', 'ines.richard@email.com', '1998-02-27', '0667891234', 'Espagne', 'es'),
-('C007', 'Durand', 'Nina', 'nina.durand@email.com', '1991-11-09', '0678912345', 'France', 'fr'),
-('C008', 'Moreau', 'Leo', 'leo.moreau@email.com', '1987-06-30', '0689123456', 'Canada', 'fr'),
-('C009', 'Simon', 'Jade', 'jade.simon@email.com', '1994-04-15', '0691234567', 'France', 'fr'),
-('C010', 'Laurent', 'Tom', 'tom.laurent@email.com', '1996-08-21', '0609876543', 'Belgique', 'fr');
+('C001', 'Dupont', 'Jean', 'jean.dupont@example.invalid', '1990-05-14', '0612345678', 'France', 'fr'),
+('C002', 'Martin', 'Claire', 'claire.martin@example.invalid', '1988-09-22', '0623456789', 'Belgique', 'fr'),
+('C003', 'Bernard', 'Lucas', 'lucas.bernard@example.invalid', '1995-03-10', '0634567891', 'France', 'fr'),
+('C004', 'Petit', 'Emma', 'emma.petit@example.invalid', '1992-12-01', '0645678912', 'Suisse', 'fr'),
+('C005', 'Robert', 'Hugo', 'hugo.robert@example.invalid', '1985-07-18', '0656789123', 'France', 'fr'),
+('C006', 'Richard', 'Ines', 'ines.richard@example.invalid', '1998-02-27', '0667891234', 'Espagne', 'es'),
+('C007', 'Durand', 'Nina', 'nina.durand@example.invalid', '1991-11-09', '0678912345', 'France', 'fr'),
+('C008', 'Moreau', 'Leo', 'leo.moreau@example.invalid', '1987-06-30', '0689123456', 'Canada', 'fr'),
+('C009', 'Simon', 'Jade', 'jade.simon@example.invalid', '1994-04-15', '0691234567', 'France', 'fr'),
+('C010', 'Laurent', 'Tom', 'tom.laurent@example.invalid', '1996-08-21', '0609876543', 'Belgique', 'fr');
 
 INSERT INTO Offre (offre, titre, description, pays_destination, ville_destination, date_debut, date_fin, duree_sejour, politique_annulation) VALUES
 ('O001', 'Séjour romantique à Rome', 'Voyage de 5 jours avec hôtel et visites culturelles.', 'Italie', 'Rome', '2025-06-01', '2025-06-30', 5, 'Annulation gratuite jusqu à 7 jours avant le départ'),
@@ -19,12 +23,12 @@ INSERT INTO Offre (offre, titre, description, pays_destination, ville_destinatio
 ('O006', 'City trip à Amsterdam', 'Séjour avec hébergement et pass transport.', 'Pays-Bas', 'Amsterdam', '2025-04-20', '2025-07-20', 3, 'Annulation partielle jusqu à 3 jours avant');
 
 INSERT INTO Prestataire (prestataire, nom_prestataire, type, email_prestataire, telephone) VALUES
-('P001', 'Hotel Roma Centro', 'hotel', 'contact@roma-centro.com', '0155551111'),
-('P002', 'Air Europa Travel', 'transport', 'resa@aireuropa-travel.com', '0155552222'),
-('P003', 'Barcelona Stay', 'hotel', 'booking@barcelonastay.com', '0155553333'),
-('P004', 'City Activities Group', 'activite', 'info@cityactivities.com', '0155554444'),
-('P005', 'Riad Atlas Premium', 'hotel', 'contact@riadatlas.com', '0155555555'),
-('P006', 'EuroMove Transport', 'transport', 'support@euromove.com', '0155556666');
+('P001', 'Hotel Roma Centro', 'hotel', 'contact@example.invalid', '0155551111'),
+('P002', 'Air Europa Travel', 'transport', 'resa@example.invalid', '0155552222'),
+('P003', 'Barcelona Stay', 'hotel', 'booking@example.invalid', '0155553333'),
+('P004', 'City Activities Group', 'activite', 'info@example.invalid', '0155554444'),
+('P005', 'Riad Atlas Premium', 'hotel', 'contact@example.invalid', '0155555555'),
+('P006', 'EuroMove Transport', 'transport', 'support@example.invalid', '0155556666');
 
 INSERT INTO Promotion (promotion, code_promo, type_promo, valeur_promo) VALUES
 ('PR001', 'SUMMER10', 'pourcentage', 10.00),
@@ -52,11 +56,11 @@ INSERT INTO Reservation (reservation, date_creation_reserv, statut_reservation, 
 ('R004', '2025-03-13 16:30:00', 'terminee', '2025-04-25', '2025-04-28', 2, 760.00, 'EUR', 'CO001', 'O006', 'C004'),
 ('R005', '2025-03-14 11:10:00', 'confirmee', '2025-09-05', '2025-09-09', 2, 890.00, 'EUR', 'CO004', 'O004', 'C005'),
 ('R006', '2025-03-15 13:00:00', 'confirmee', '2025-07-01', '2025-07-08', 4, 2100.00, 'EUR', 'CO002', 'O005', 'C006'),
-('R007', '2025-03-16 15:45:00', 'en_option', '2025-08-03', '2025-08-06', 2, 680.00, 'USD', 'CO003', 'O002', 'C007'),
+('R007', '2025-03-16 15:45:00', 'en_option', '2025-07-23', '2025-07-26', 2, 680.00, 'USD', 'CO003', 'O002', 'C007'),
 ('R008', '2025-03-17 17:25:00', 'confirmee', '2025-06-18', '2025-06-22', 1, 610.00, 'EUR', 'CO004', 'O003', 'C008'),
-('R009', '2025-03-18 08:55:00', 'terminee', '2025-05-02', '2025-05-07', 2, 1020.00, 'GBP', 'CO001', 'O001', 'C009'),
+('R009', '2025-03-18 08:55:00', 'terminee', '2025-06-02', '2025-06-07', 2, 1020.00, 'GBP', 'CO001', 'O001', 'C009'),
 ('R010', '2025-03-19 12:35:00', 'confirmee', '2025-08-15', '2025-08-22', 3, 1750.00, 'EUR', 'CO002', 'O005', 'C010'),
-('R011', '2025-03-20 10:05:00', 'annulee', '2025-09-18', '2025-09-21', 1, 540.00, 'EUR', 'CO003', 'O006', 'C001'),
+('R011', '2025-03-20 10:05:00', 'annulee', '2025-07-16', '2025-07-19', 1, 540.00, 'EUR', 'CO003', 'O006', 'C001'),
 ('R012', '2025-03-21 18:10:00', 'confirmee', '2025-10-02', '2025-10-06', 2, 870.00, 'EUR', 'CO004', 'O004', 'C002');
 
 INSERT INTO Paiement (paiement, statut_paiement, montant_paiement, reservation) VALUES
@@ -115,5 +119,4 @@ INSERT INTO Inclut (reservation, option_id) VALUES
 ('R011', 'OP004'),
 ('R012', 'OP001');
 
-
-
+COMMIT;

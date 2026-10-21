@@ -1,3 +1,5 @@
+-- Contraintes de domaine — MySQL 8.0.16 ou plus récent
+
 ALTER TABLE Reservation
 ADD CONSTRAINT ck_nbvoyageur CHECK (nb_voyageurs > 0);
 
