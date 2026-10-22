@@ -1,5 +1,18 @@
 # Base de données de réservation de voyages
 
+## Essayer avec un seul fichier
+
+Prérequis : **MySQL 8.0.16 ou plus récent** et une connexion dans MySQL Workbench.
+
+1. Télécharger [DEMO.sql](https://github.com/Sebastienrmz/sql-reservation-voyages/raw/refs/heads/main/DEMO.sql).
+2. Dans Workbench, ouvrir sa connexion puis **File → Open SQL Script** et choisir ce fichier.
+3. Exécuter tout le fichier avec le bouton éclair. Il crée une base **voyages_demo**, les tables, les données fictives, puis lance les 40 requêtes.
+4. Les trois derniers résultats doivent indiquer **11 tables**, **10 clients** et **12 réservations**.
+
+La base `voyages_demo` doit être inexistante. Pour recommencer, remplacer ce nom par `voyages_demo_2` dans les deux premières instructions du fichier. Aucun schéma existant n’est supprimé.
+
+`DEMO.sql` rassemble les quatre scripts ci-dessous pour faciliter le premier essai. Pour étudier ou modifier le projet, utiliser les fichiers séparés ; régénérer la copie de démonstration après une modification.
+
 Projet réalisé par **Sébastien Ramirez et Raphaël de Robien** à l'EFREI, dans le cadre du cours **TI404 – Bases de données 1**.
 
 La base représente une agence de voyages : clients, offres, réservations, paiements, prestataires, promotions et options. Le travail comprend l'analyse des besoins avec MERISE, un modèle conceptuel et 40 requêtes SQL.
