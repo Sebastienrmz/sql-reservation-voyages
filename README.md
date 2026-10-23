@@ -1,5 +1,11 @@
 # Base de données de réservation de voyages
 
+Projet réalisé par **Sébastien Ramirez et Raphaël de Robien** à l'EFREI, dans le cadre du cours **TI404 – Bases de données 1**.
+
+La base représente une agence de voyages : clients, offres, réservations, paiements, prestataires, promotions et options. Le travail comprend l'analyse des besoins avec MERISE, un modèle conceptuel et 40 requêtes SQL.
+
+Ce dépôt est un fork du [projet du binôme](https://github.com/raph907/ProjetDB_Ramirez_deRobien), dont l’historique est conservé.
+
 ## Essayer avec un seul fichier
 
 Prérequis : **MySQL 8.0.16 ou plus récent** et une connexion dans MySQL Workbench.
@@ -12,12 +18,6 @@ Prérequis : **MySQL 8.0.16 ou plus récent** et une connexion dans MySQL Workbe
 La base `voyages_demo` doit être inexistante. Pour recommencer, remplacer ce nom par `voyages_demo_2` dans les deux premières instructions du fichier. Aucun schéma existant n’est supprimé.
 
 `DEMO.sql` rassemble les quatre scripts ci-dessous pour faciliter le premier essai. Pour étudier ou modifier le projet, utiliser les fichiers séparés ; régénérer la copie de démonstration après une modification.
-
-Projet réalisé par **Sébastien Ramirez et Raphaël de Robien** à l'EFREI, dans le cadre du cours **TI404 – Bases de données 1**.
-
-La base représente une agence de voyages : clients, offres, réservations, paiements, prestataires, promotions et options. Le travail comprend l'analyse des besoins avec MERISE, un modèle conceptuel et 40 requêtes SQL.
-
-Cette version reprend le [dépôt du binôme](https://github.com/raph907/ProjetDB_Ramirez_deRobien) et conserve son historique. Les fichiers ont été rangés et quelques requêtes et données d'exemple corrigées. Le modèle relationnel reste le même.
 
 ## Utiliser la base
 
@@ -97,11 +97,11 @@ Avec les données fournies, `R001` donne **980.00**, `R006` donne **2100.00** et
 - La suppression d'un conseiller laisse la réservation avec un conseiller `NULL`. Les autres relations utilisent les suppressions en cascade définies dans le script de création.
 - Les contraintes vérifient notamment les montants et les dates, mais plusieurs colonnes restent facultatives. Un `CHECK` ne remplace pas `NOT NULL`.
 - Les promotions sont associées aux offres ; elles ne recalculent pas automatiquement les prix. Le total des paiements n'est pas automatiquement rapproché du prix d'une réservation.
-- Les dates des séjours et les coordonnées sont des exemples fixes. Le jeu de données a été corrigé pour placer les trois séjours hors période dans les dates de validité de leur offre. Cette règle n'est pas imposée automatiquement entre les tables.
+- Les dates et les coordonnées sont fictives. Les séjours fournis respectent les périodes des offres, mais cette règle n’est pas vérifiée automatiquement entre les tables.
 - Le parrainage, la date et le moyen de paiement évoqués dans l'analyse initiale ne figurent pas dans les tables finales. Il n'y a pas d'interface web ni de système de réservation en ligne.
 
 ## Documents de cours
 
-L'[analyse initiale](docs/conception-initiale.md) et le [prompt de génération des données](docs/prompt_insertion.txt) sont conservés dans `docs/`. Ils retracent la démarche du cours et les aides utilisées. L'analyse des besoins et le MCD sont attribués aux deux membres du binôme dans le document d'origine ; aucune répartition individuelle supplémentaire n'est revendiquée ici.
+L'[analyse initiale](docs/conception-initiale.md) et le [prompt de génération des données](docs/prompt_insertion.txt) sont conservés dans `docs/`. Ces documents accompagnent le travail de conception du binôme.
 
 Voir [les vérifications et corrections](docs/verification.md) pour le détail des essais effectués sur cette version.
